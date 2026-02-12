@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Medical_App_Api.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20260212194508_InicialCreate")]
+    [Migration("20260212201509_InicialCreate")]
     partial class InicialCreate
     {
         /// <inheritdoc />
@@ -99,21 +99,21 @@ namespace Medical_App_Api.Migrations
 
             modelBuilder.Entity("Medical_App_Api.Model.Appointment", b =>
                 {
-                    b.HasOne("Medical_App_Api.Model.Doctor", "doctor")
+                    b.HasOne("Medical_App_Api.Model.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Medical_App_Api.Model.Patient", "patient")
+                    b.HasOne("Medical_App_Api.Model.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("doctor");
+                    b.Navigation("Doctor");
 
-                    b.Navigation("patient");
+                    b.Navigation("Patient");
                 });
 #pragma warning restore 612, 618
         }
