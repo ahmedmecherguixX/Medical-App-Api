@@ -10,9 +10,9 @@ namespace Medical_App_Api.Data
         public DbSet<LoginAccount> LoginAccounts { get; set; }
         public DbSet<Patient> patients { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source=MedicalAppApiDb.db");
-        }
+
+        public AppDataContext(DbContextOptions<AppDataContext> options)
+        : base(options) { }
+
     }
 }
