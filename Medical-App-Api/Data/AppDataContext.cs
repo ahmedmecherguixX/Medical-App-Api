@@ -5,10 +5,10 @@ namespace Medical_App_Api.Data
 {
     public class AppDataContext : DbContext
     {
-        DbSet<Appointment> Appointments { get; set; }
-        DbSet<Doctor> Doctors { get; set; }
-        DbSet<LoginAccount> LoginAccounts { get; set; }
-        DbSet<Patient> patients { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<LoginAccount> LoginAccounts { get; set; }
+        public DbSet<Patient> patients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
