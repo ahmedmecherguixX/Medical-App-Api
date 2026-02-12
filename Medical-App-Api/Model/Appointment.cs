@@ -12,6 +12,7 @@
         public int Duration { get; set; }
         public string? Description { get; set; }
 
-
+        public Patient patient { get; set; } = null!;
+        public Doctor doctor { get; set; } = null!;
     }
 }
