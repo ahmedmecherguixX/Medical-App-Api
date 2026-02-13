@@ -18,7 +18,14 @@ namespace Medical_App_Api.Services
 
         public async Task AddLoginAccount(string email,string password)
         {
-            var account = new LoginAccount
+            var account = await _context.LoginAccounts.FirstOrDefaultAsync(a => a.Email == email);
+
+            if (account is not null)
+            {
+                throw new Exception($"another user already has this email: {email}");
+            }
+
+            account = new LoginAccount
             {
                 Email = email,
             };
