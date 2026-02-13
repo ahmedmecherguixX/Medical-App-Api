@@ -60,7 +60,7 @@ namespace Medical_App_Api.Services
 
         }
 
-        public async Task DeleteLoginAccount(string email,string password)
+        public async Task RemoveLoginAccount(string email,string password)
         {
             var account = await _context.LoginAccounts.FirstOrDefaultAsync(a => a.Email == email);
 
