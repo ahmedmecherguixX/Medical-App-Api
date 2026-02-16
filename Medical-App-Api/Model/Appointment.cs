@@ -1,4 +1,6 @@
-﻿namespace Medical_App_Api.Model
+﻿using Microsoft.VisualBasic;
+
+namespace Medical_App_Api.Model
 {
     public class Appointment
     {
