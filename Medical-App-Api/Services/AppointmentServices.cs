@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Medical_App_Api.Data;
 using Medical_App_Api.Model;
-using Microsoft.VisualBasic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Medical_App_Api.Services
 {
@@ -32,6 +32,16 @@ namespace Medical_App_Api.Services
                 throw new Exception("the date has already passed");
             }
 
+            if (duration <= 0)
+            {
+                throw new Exception("non valid duration");
+            }
+
+            if (!await IsTimeSlotAvailable(0, doctorid, duration, datetime))
+            {
+                throw new Exception("doctor is not available in this time slot");
+            }
+                
             var appointment = new Appointment
             {
                 PatientId = patientid,
@@ -46,12 +56,17 @@ namespace Medical_App_Api.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAppointment(int patientid, int doctorid, int duration, DateTime datetime,AppointmentStatus appointmentstatus)
+        public async Task UpdateAppointment(int appointmentid, int patientid, int doctorid, int duration, DateTime datetime,AppointmentStatus appointmentstatus)
         {
             var patient = _context.Patients.Find(patientid);
             if (patient == null)
             {
                 throw new Exception("patient not found");
+            }
+
+            if (duration <= 0)
+            {
+                throw new Exception("non valid duration");
             }
 
             var doctor = _context.Doctors.Find(doctorid);
@@ -65,15 +80,16 @@ namespace Medical_App_Api.Services
                 throw new Exception("the date has already passed");
             }
 
-            var appointment = new Appointment
+            var appointment = _context.Appointments.FirstOrDefault(a => a.Id == appointmentid);
+            if (appointment == null)
             {
-                PatientId = patientid,
-                DoctorId = doctorid,
-                Duration = duration,
-                DateAndTime = datetime,
-                Status = appointmentstatus,
-            };
+                throw new Exception("appointment not found");
+            }
 
+            if (!await IsTimeSlotAvailable(appointmentid, doctorid, duration, datetime))
+            {
+                throw new Exception("Doctor is not available in this time slot");
+            }
 
             _context.Appointments.Update(appointment);
             await _context.SaveChangesAsync();
@@ -106,6 +122,22 @@ namespace Medical_App_Api.Services
             _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> IsTimeSlotAvailable(int appointmentid, int doctorid, int duration, DateTime dateTime)
+        {
+            var newStart = dateTime;
+            var newEnd = dateTime.AddMinutes(duration);
+
+            return !await _context.Appointments.AnyAsync(a =>
+                a.DoctorId == doctorid &&
+                a.Id != appointmentid &&
+                newStart < a.DateAndTime.AddMinutes(a.Duration) &&
+                newEnd > a.DateAndTime
+            );
+        }
+
+
+
 
     }
 }
