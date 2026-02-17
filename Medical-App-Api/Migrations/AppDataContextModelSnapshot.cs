@@ -70,7 +70,7 @@ namespace Medical_App_Api.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -91,7 +91,7 @@ namespace Medical_App_Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("patients");
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Medical_App_Api.Model.Appointment", b =>

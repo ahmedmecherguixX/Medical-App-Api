@@ -27,7 +27,7 @@ namespace Medical_App_Api.Services
                 throw new Exception("doctor not found");
             }
 
-            if (datetime < DateTime.Now)
+            if (datetime < DateTime.UtcNow)
             {
                 throw new Exception("the date has already passed");
             }
@@ -75,7 +75,7 @@ namespace Medical_App_Api.Services
                 throw new Exception("doctor not found");
             }
 
-            if (datetime < DateTime.Now)
+            if (datetime < DateTime.UtcNow)
             {
                 throw new Exception("the date has already passed");
             }
@@ -90,6 +90,12 @@ namespace Medical_App_Api.Services
             {
                 throw new Exception("Doctor is not available in this time slot");
             }
+
+            appointment.PatientId = patientid;
+            appointment.DoctorId = doctorid;
+            appointment.Duration = duration;
+            appointment.DateAndTime = datetime;
+            appointment.Status = appointmentstatus;
 
             _context.Appointments.Update(appointment);
             await _context.SaveChangesAsync();

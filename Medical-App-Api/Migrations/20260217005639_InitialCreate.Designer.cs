@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Medical_App_Api.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20260212201509_InicialCreate")]
-    partial class InicialCreate
+    [Migration("20260217005639_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,7 +73,7 @@ namespace Medical_App_Api.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -94,7 +94,7 @@ namespace Medical_App_Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("patients");
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Medical_App_Api.Model.Appointment", b =>
