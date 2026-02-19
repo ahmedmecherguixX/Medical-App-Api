@@ -2,8 +2,16 @@ using Medical_App_Api.Data;
 using Medical_App_Api.Model;
 using Medical_App_Api.Services;
 using Microsoft.EntityFrameworkCore;
+using DotNetEnv;
 
+
+Env.Load();
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET");
+var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
 
 builder.Services.AddDbContext<AppDataContext>(options =>
     options.UseSqlite("Data Source=MedicalAppApiDb.db"));
